@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册界面</title>
+    <script src="http://localhost:8080/film/js/jquery-3.4.1.min.js" type="text/javascript"></script>
+    <link href="http://localhost:8080/film/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+    <script src="http://localhost:8080/film/js/bootstrap.min.js" type="text/javascript"></script>
+    <script>
+        var b1=false;var b2=false;var b3=false;
+        $(function () {
+            //用户名校验
+            $("#user-name-label").blur(function () {
+                var name = $(this).val();
+                $.ajax({
+                    url: "http://localhost:8080/film/user/usernamechecked",
+                    type: "post",
+                    data: {"username": name},
+                    success: function (data) {
+                        $("#span1").html(data);
+                        if (data=="可以使用"){
+                            b1=true;
+                        }else {
+                            b1=false;
+                        }
+                    },
+                    error: function () {
+                        alert("err");
+                    },
+                    dataType: "text"
+                })
+            });
+            //2个密码校验
+            $("#exampleInputPassword1").blur(function () {
+                var pwd1 = $(this).val();
+                var patrn=/^(\w){6,20}$/;
+                if (!patrn.exec(pwd1)){
+                    $("#pwd1span").html("只能输入6-20个字母、数字、下划线 ");
+                    b2=false;
+                } else {
+                    $("#pwd1span").html("格式真确");
+                    b2=true;
+                }
+            });
+            $("#exampleInputPassword2").blur(function () {
+                var pwd2 = $(this).val();
+                var pwd1=$("#exampleInputPassword1").val();
+                if (pwd1==pwd2){
+                    $("#pwd2span").html("密码相同");
+                    b3=true;
+                } else {
+                    $("#pwd2span").html("密码不同");
+                    b3=false;
+                }
+            });
+
+        });
+
+        function checkinfo() {
+            if (b1&&b2&&b3){
+                alert("注册成功")
+                return true;
+            } else {
+                alert("请按照要求填写")
+                return false;
+            }
+        };
+
+    </script>
+<style type="text/css">
+    .app111{
+        background: url("images/pic_register1.jpg") no-repeat;
+        height:100%;
+        width:100%;
+        overflow: hidden;
+        background-size:100%;
+    }
+</style>
+
+</head>
+<body class="app111" >
+<div  style="margin-top: 10%" class="row">
+    <div class="col-md-5 col-md-offset-5">
+<form action="http://localhost:8080/film/user/register" method="post" onsubmit="return checkinfo()" class="form-group">
+    <div style="width: 300px">
+        <div class="form-group">
+            <label for="user-name-label">Username</label>
+            <input type="text" name="username" class="form-control" id="user-name-label" placeholder="用户名" required> <span id="span1"></span>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password" required/>
+            <span id="pwd1span"></span>
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword2">Password</label>
+            <input type="password" name="uPwd2" class="form-control" id="exampleInputPassword2" placeholder="Password" required/>
+            <span id="pwd2span"></span>
+        </div>
+        <br/>
+        <input type="submit" value="提交" class="btn"/>
+        <input type="reset" value="重置" class="btn"/>
+
+    </div>
+</form>
+    </div>
+</div>
+
+</body>
+</html>

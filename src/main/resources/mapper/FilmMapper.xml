@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Start.lpy.Mapper.FilmMapper" >
+  <resultMap id="BaseResultMap" type="Start.lpy.pojo.Film" >
+    <id column="fid" property="fid" jdbcType="CHAR" />
+    <result column="film_name" property="filmName" jdbcType="CHAR" />
+    <result column="film_picture" property="filmPicture" jdbcType="CHAR" />
+    <result column="film_length" property="filmLength" jdbcType="TIME" />
+    <result column="film_releasetime" property="filmReleasetime" jdbcType="TIMESTAMP" />
+    <result column="film_director" property="filmDirector" jdbcType="CHAR" />
+    <result column="film_mainactors" property="filmMainactors" jdbcType="CHAR" />
+    <result column="film_productorcountry" property="filmProductorcountry" jdbcType="CHAR" />
+    <result column="film_description" property="filmDescription" jdbcType="CHAR" />
+    <result column="film_price" property="filmPrice" jdbcType="DOUBLE" />
+    <result column="film_clickcount" property="filmClickcount" jdbcType="INTEGER" />
+  </resultMap>
+  <!--电影和电影类型表一对一关系-->
+  <resultMap id="FilmTypeResultMap" type="Start.lpy.pojo.Film">
+    <id column="fid" property="fid" jdbcType="CHAR" />
+    <result column="film_name" property="filmName" jdbcType="CHAR" />
+    <result column="film_picture" property="filmPicture" jdbcType="CHAR" />
+    <result column="film_length" property="filmLength" jdbcType="TIME" />
+    <result column="film_releasetime" property="filmReleasetime" jdbcType="TIMESTAMP" />
+    <result column="film_director" property="filmDirector" jdbcType="CHAR" />
+    <result column="film_mainactors" property="filmMainactors" jdbcType="CHAR" />
+    <result column="film_productorcountry" property="filmProductorcountry" jdbcType="CHAR" />
+    <result column="film_description" property="filmDescription" jdbcType="CHAR" />
+    <result column="film_price" property="filmPrice" jdbcType="DOUBLE" />
+    <result column="film_clickcount" property="filmClickcount" jdbcType="INTEGER" />
+    <association property="filmtype" javaType="Start.lpy.pojo.Filmtype">
+      <result column="film_typename" property="filmTypename"/>
+    </association>
+  </resultMap>
+
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fid, film_name, film_picture, film_length, film_releasetime, film_director, film_mainactors, 
+    film_productorcountry, film_description, film_price, film_clickcount
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Start.lpy.pojo.FilmExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from film
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from film
+    where fid = #{fid,jdbcType=CHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from film
+    where fid = #{fid,jdbcType=CHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="Start.lpy.pojo.FilmExample" >
+    delete from film
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="Start.lpy.pojo.Film" >
+    insert into film (fid, film_name, film_picture, 
+      film_length, film_releasetime, film_director, 
+      film_mainactors, film_productorcountry, film_description, 
+      film_price, film_clickcount)
+    values (#{fid,jdbcType=CHAR}, #{filmName,jdbcType=CHAR}, #{filmPicture,jdbcType=CHAR}, 
+      #{filmLength,jdbcType=TIME}, #{filmReleasetime,jdbcType=TIMESTAMP}, #{filmDirector,jdbcType=CHAR}, 
+      #{filmMainactors,jdbcType=CHAR}, #{filmProductorcountry,jdbcType=CHAR}, #{filmDescription,jdbcType=CHAR}, 
+      #{filmPrice,jdbcType=DOUBLE}, #{filmClickcount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="Start.lpy.pojo.Film" >
+    insert into film
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="filmName != null" >
+        film_name,
+      </if>
+      <if test="filmPicture != null" >
+        film_picture,
+      </if>
+      <if test="filmLength != null" >
+        film_length,
+      </if>
+      <if test="filmReleasetime != null" >
+        film_releasetime,
+      </if>
+      <if test="filmDirector != null" >
+        film_director,
+      </if>
+      <if test="filmMainactors != null" >
+        film_mainactors,
+      </if>
+      <if test="filmProductorcountry != null" >
+        film_productorcountry,
+      </if>
+      <if test="filmDescription != null" >
+        film_description,
+      </if>
+      <if test="filmPrice != null" >
+        film_price,
+      </if>
+      <if test="filmClickcount != null" >
+        film_clickcount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=CHAR},
+      </if>
+      <if test="filmName != null" >
+        #{filmName,jdbcType=CHAR},
+      </if>
+      <if test="filmPicture != null" >
+        #{filmPicture,jdbcType=CHAR},
+      </if>
+      <if test="filmLength != null" >
+        #{filmLength,jdbcType=TIME},
+      </if>
+      <if test="filmReleasetime != null" >
+        #{filmReleasetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filmDirector != null" >
+        #{filmDirector,jdbcType=CHAR},
+      </if>
+      <if test="filmMainactors != null" >
+        #{filmMainactors,jdbcType=CHAR},
+      </if>
+      <if test="filmProductorcountry != null" >
+        #{filmProductorcountry,jdbcType=CHAR},
+      </if>
+      <if test="filmDescription != null" >
+        #{filmDescription,jdbcType=CHAR},
+      </if>
+      <if test="filmPrice != null" >
+        #{filmPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="filmClickcount != null" >
+        #{filmClickcount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+    <insert id="insertfilmtypebind" parameterType="Start.lpy.pojo.Film">
+        insert into film_filmtype(fid,ftid) values(#{fid,jdbcType=CHAR},#{filmtype.ftid,jdbcType=INTEGER})
+    </insert>
+
+    <select id="countByExample" parameterType="Start.lpy.pojo.FilmExample" resultType="java.lang.Integer" >
+    select count(*) from film
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="selectAllfilm" resultMap="BaseResultMap">
+      select * from  film where film_price = 0
+
+    </select>
+  <select id="selecthotfilm" resultMap="BaseResultMap">
+    select * from film order by film_clickcount desc limit 0,10
+
+  </select>
+  <select id="selectByNameorActors" resultMap="BaseResultMap">
+      select  * from film where film_mainactors like '%${filmName}%' or film_name like '%${filmName}%'
+
+  </select>
+  <select id="selectfilminfoByName" resultMap="FilmTypeResultMap">
+      SELECT film.*,film_typename
+      FROM  film NATURAL join film_filmtype NATURAL join filmtype
+      <if test="filmName != null">
+      where  film_name like '%${filmName}%'
+      </if>
+      ORDER BY fid
+
+  </select>
+    <select id="selectAllfilmCharge" resultMap="BaseResultMap">
+        select * from  film where film_price > 0
+    </select>
+    <update id="updateByExampleSelective" parameterType="map" >
+    update film
+    <set >
+      <if test="record.fid != null" >
+        fid = #{record.fid,jdbcType=CHAR},
+      </if>
+      <if test="record.filmName != null" >
+        film_name = #{record.filmName,jdbcType=CHAR},
+      </if>
+      <if test="record.filmPicture != null" >
+        film_picture = #{record.filmPicture,jdbcType=CHAR},
+      </if>
+      <if test="record.filmLength != null" >
+        film_length = #{record.filmLength,jdbcType=TIME},
+      </if>
+      <if test="record.filmReleasetime != null" >
+        film_releasetime = #{record.filmReleasetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.filmDirector != null" >
+        film_director = #{record.filmDirector,jdbcType=CHAR},
+      </if>
+      <if test="record.filmMainactors != null" >
+        film_mainactors = #{record.filmMainactors,jdbcType=CHAR},
+      </if>
+      <if test="record.filmProductorcountry != null" >
+        film_productorcountry = #{record.filmProductorcountry,jdbcType=CHAR},
+      </if>
+      <if test="record.filmDescription != null" >
+        film_description = #{record.filmDescription,jdbcType=CHAR},
+      </if>
+      <if test="record.filmPrice != null" >
+        film_price = #{record.filmPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.filmClickcount != null" >
+        film_clickcount = #{record.filmClickcount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update film
+    set fid = #{record.fid,jdbcType=CHAR},
+      film_name = #{record.filmName,jdbcType=CHAR},
+      film_picture = #{record.filmPicture,jdbcType=CHAR},
+      film_length = #{record.filmLength,jdbcType=TIME},
+      film_releasetime = #{record.filmReleasetime,jdbcType=TIMESTAMP},
+      film_director = #{record.filmDirector,jdbcType=CHAR},
+      film_mainactors = #{record.filmMainactors,jdbcType=CHAR},
+      film_productorcountry = #{record.filmProductorcountry,jdbcType=CHAR},
+      film_description = #{record.filmDescription,jdbcType=CHAR},
+      film_price = #{record.filmPrice,jdbcType=DOUBLE},
+      film_clickcount = #{record.filmClickcount,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="Start.lpy.pojo.Film" >
+    update film
+    <set >
+      <if test="filmName != null" >
+        film_name = #{filmName,jdbcType=CHAR},
+      </if>
+      <if test="filmPicture != null" >
+        film_picture = #{filmPicture,jdbcType=CHAR},
+      </if>
+      <if test="filmLength != null" >
+        film_length = #{filmLength,jdbcType=TIME},
+      </if>
+      <if test="filmReleasetime != null" >
+        film_releasetime = #{filmReleasetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filmDirector != null" >
+        film_director = #{filmDirector,jdbcType=CHAR},
+      </if>
+      <if test="filmMainactors != null" >
+        film_mainactors = #{filmMainactors,jdbcType=CHAR},
+      </if>
+      <if test="filmProductorcountry != null" >
+        film_productorcountry = #{filmProductorcountry,jdbcType=CHAR},
+      </if>
+      <if test="filmDescription != null" >
+        film_description = #{filmDescription,jdbcType=CHAR},
+      </if>
+      <if test="filmPrice != null" >
+        film_price = #{filmPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="filmClickcount != null" >
+        film_clickcount = #{filmClickcount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=CHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Start.lpy.pojo.Film" >
+    update film
+    set film_clickcount = film_clickcount + 1
+    where fid = #{fid,jdbcType=CHAR}
+  </update>
+    <update id="updatepricebykey">
+       update film
+    set film_price = #{filmPrice,jdbcType=DOUBLE}
+    where fid = #{fid,jdbcType=CHAR}
+    </update>
+  <update id="updatefilmbykey">
+    update film
+    set film_price = #{filmPrice,jdbcType=DOUBLE},film_picture = #{filmPicture,jdbcType=CHAR}
+    where fid = #{fid,jdbcType=CHAR}
+  </update>
+  <update id="updatefilmtypebyfid">
+    update  film_filmtype
+    set ftid=#{filmtype.ftid}
+    where  fid = #{fid,jdbcType=CHAR}
+  </update>
+</mapper>

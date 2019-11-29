@@ -1,0 +1,47 @@
+{
+  "groups": [
+    {
+      "name": "us",
+      "type": "Start.lpy.pojo.User",
+      "sourceType": "Start.lpy.pojo.User"
+    }
+  ],
+  "properties": [
+    {
+      "name": "us.create-time",
+      "type": "java.util.Date",
+      "sourceType": "Start.lpy.pojo.User"
+    },
+    {
+      "name": "us.password",
+      "type": "java.lang.String",
+      "sourceType": "Start.lpy.pojo.User"
+    },
+    {
+      "name": "us.role-id",
+      "type": "java.lang.Integer",
+      "sourceType": "Start.lpy.pojo.User"
+    },
+    {
+      "name": "us.state-flag",
+      "type": "java.lang.Integer",
+      "sourceType": "Start.lpy.pojo.User"
+    },
+    {
+      "name": "us.surplus",
+      "type": "java.lang.Double",
+      "sourceType": "Start.lpy.pojo.User"
+    },
+    {
+      "name": "us.uid",
+      "type": "java.lang.Integer",
+      "sourceType": "Start.lpy.pojo.User"
+    },
+    {
+      "name": "us.username",
+      "type": "java.lang.String",
+      "sourceType": "Start.lpy.pojo.User"
+    }
+  ],
+  "hints": []
+}

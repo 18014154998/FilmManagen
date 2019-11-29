@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Start.lpy.Mapper.UserhistoryMapper" >
+  <resultMap id="BaseResultMap" type="Start.lpy.pojo.Userhistory" >
+    <id column="historyid" property="historyid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="filmid" property="filmid" jdbcType="CHAR" />
+    <result column="username" property="username" jdbcType="CHAR" />
+    <result column="filmname" property="filmname" jdbcType="CHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    historyid, uid, filmid, username, filmname, createtime
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Start.lpy.pojo.UserhistoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from userhistory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from userhistory
+    where historyid = #{historyid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from userhistory
+    where historyid = #{historyid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="Start.lpy.pojo.UserhistoryExample" >
+    delete from userhistory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="Start.lpy.pojo.Userhistory" >
+    insert into userhistory (historyid, uid, filmid, 
+      username, filmname, createtime
+      )
+    values (#{historyid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{filmid,jdbcType=CHAR}, 
+      #{username,jdbcType=CHAR}, #{filmname,jdbcType=CHAR}, #{createtime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="Start.lpy.pojo.Userhistory" >
+    insert into userhistory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="historyid != null" >
+        historyid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="filmid != null" >
+        filmid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="filmname != null" >
+        filmname,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="historyid != null" >
+        #{historyid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="filmid != null" >
+        #{filmid,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="filmname != null" >
+        #{filmname,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="Start.lpy.pojo.UserhistoryExample" resultType="java.lang.Integer" >
+    select count(*) from userhistory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectByUid" resultMap="BaseResultMap">
+      select  * from userhistory
+      where  uid = #{record.uid,jdbcType=INTEGER}
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update userhistory
+    <set >
+      <if test="record.historyid != null" >
+        historyid = #{record.historyid,jdbcType=INTEGER},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.filmid != null" >
+        filmid = #{record.filmid,jdbcType=CHAR},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=CHAR},
+      </if>
+      <if test="record.filmname != null" >
+        filmname = #{record.filmname,jdbcType=CHAR},
+      </if>
+      <if test="record.createtime != null" >
+        createtime = #{record.createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update userhistory
+    set historyid = #{record.historyid,jdbcType=INTEGER},
+      uid = #{record.uid,jdbcType=INTEGER},
+      filmid = #{record.filmid,jdbcType=CHAR},
+      username = #{record.username,jdbcType=CHAR},
+      filmname = #{record.filmname,jdbcType=CHAR},
+      createtime = #{record.createtime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="Start.lpy.pojo.Userhistory" >
+    update userhistory
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="filmid != null" >
+        filmid = #{filmid,jdbcType=CHAR},
+      </if>
+      <if test="username != null" >
+        username = #{username,jdbcType=CHAR},
+      </if>
+      <if test="filmname != null" >
+        filmname = #{filmname,jdbcType=CHAR},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where historyid = #{historyid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Start.lpy.pojo.Userhistory" >
+    update userhistory
+    set uid = #{uid,jdbcType=INTEGER},
+      filmid = #{filmid,jdbcType=CHAR},
+      username = #{username,jdbcType=CHAR},
+      filmname = #{filmname,jdbcType=CHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where historyid = #{historyid,jdbcType=INTEGER}
+  </update>
+</mapper>

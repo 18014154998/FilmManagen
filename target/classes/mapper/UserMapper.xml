@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Start.lpy.Mapper.UserMapper" >
+
+  <resultMap id="BaseResultMap" type="Start.lpy.pojo.User" >
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="CHAR" />
+    <result column="password" property="password" jdbcType="CHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="state_flag" property="stateFlag" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="surplus" property="surplus" jdbcType="DOUBLE" />
+  </resultMap>
+
+  <!--user和grade表关联 中间表为user_grade-->
+  <resultMap id="UserGradeResultMap" type="Start.lpy.pojo.User">
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="CHAR" />
+    <result column="password" property="password" jdbcType="CHAR" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="state_flag" property="stateFlag" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="surplus" property="surplus" jdbcType="DOUBLE" />
+    <association property="grade" javaType="Start.lpy.pojo.Grade">
+      <result column="grade_name" property="gradeName" jdbcType="CHAR" />
+    </association>
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, username, password, role_id, state_flag, create_time, surplus
+  </sql>
+<select id="findall" resultMap="BaseResultMap" >
+  select  * from  user
+</select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Start.lpy.pojo.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="Start.lpy.pojo.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert1" parameterType="Start.lpy.pojo.User" >
+    insert into user (username, password)
+    values (#{username,jdbcType=CHAR}, #{password,jdbcType=CHAR})
+
+
+  </insert>
+  <insert id="insert" parameterType="Start.lpy.pojo.User" >
+    insert into user (uid, username, password, 
+      role_id, state_flag, create_time, 
+      surplus)
+    values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=CHAR}, #{password,jdbcType=CHAR}, 
+      #{roleId,jdbcType=INTEGER}, #{stateFlag,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{surplus,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="Start.lpy.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="stateFlag != null" >
+        state_flag,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="surplus != null" >
+        surplus,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=CHAR},
+      </if>
+      <if  test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="stateFlag != null" >
+        #{stateFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="surplus != null" >
+        #{surplus,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <insert id="insertuser_role" parameterType="integer">
+    INSERT into user_role (uid) VALUES(#{key});
+  </insert>
+  <insert id="insertuser_grade" parameterType="integer">
+    INSERT into user_grade (uid) VALUES(#{key});
+  </insert>
+  <insert id="insertuser_role1" parameterType="integer">
+    INSERT into user_role (uid,roleid) VALUES(#{param1},#{param2});
+  </insert>
+  <select id="countByExample" parameterType="Start.lpy.pojo.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="selectUser" resultType="java.lang.Integer" parameterType="Start.lpy.pojo.User">
+      select count(*) from  user
+      where username = #{username}
+      <if test=" password != null ">
+        and
+        password = #{password}
+      </if>
+  </select>
+  <select id="selectUserInfo" parameterType="Start.lpy.pojo.User" resultMap="BaseResultMap">
+    select  *  from  user
+    where  username = #{username}
+      and
+           password = #{password}
+      and  state_flag = 1
+  </select>
+  <select id="getInsertedKeyPrimary" resultType="java.lang.Integer">
+    SELECT LAST_INSERT_ID()
+  </select>
+    <select id="selectUserInfobyname" resultMap="BaseResultMap">
+        select * from user where  username like '%${username}%'
+    </select>
+  <select id="finduserGrade" resultMap="UserGradeResultMap">
+      SELECT  uid, username,surplus,grade_name
+      FROM `user` NATURAL JOIN user_grade NATURAL JOIN grade
+       WHERE
+    <if test=" username != null ">
+      username LIKE '%${username}%'
+    </if>
+
+
+
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username,jdbcType=CHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=CHAR},
+      </if>
+      <if test="record.roleId != null" >
+        role_id = #{record.roleId,jdbcType=INTEGER},
+      </if>
+      <if test="record.stateFlag != null" >
+        state_flag = #{record.stateFlag,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.surplus != null" >
+        surplus = #{record.surplus,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set uid = #{record.uid,jdbcType=INTEGER},
+      username = #{record.username,jdbcType=CHAR},
+      password = #{record.password,jdbcType=CHAR},
+      role_id = #{record.roleId,jdbcType=INTEGER},
+      state_flag = #{record.stateFlag,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      surplus = #{record.surplus,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="Start.lpy.pojo.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=CHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="stateFlag != null" >
+        state_flag = #{stateFlag,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="surplus != null" >
+        surplus = #{surplus,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Start.lpy.pojo.User" >
+    update user
+    set username = #{username,jdbcType=CHAR},
+      password = #{password,jdbcType=CHAR},
+      role_id = #{roleId,jdbcType=INTEGER},
+      state_flag = #{stateFlag,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      surplus = #{surplus,jdbcType=DOUBLE}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateuserinfobyuid" parameterType="Start.lpy.pojo.User">
+      update user
+      set
+      state_flag = 0
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="upadateuserrole">
+    update user_role  set roleid = #{param2} where uid = #{param1}
+  </update>
+
+  <update id="updateSurplus" parameterType="Start.lpy.pojo.User">
+    update user
+      set
+      surplus = #{surplus}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <!--2000以下为非会员代码1，10000一下为黄金会员代码2，10000以上为砖石会员代码为3-->
+  <update id="updatagrade_user" parameterType="Start.lpy.pojo.User">
+      update user_grade
+      <set>
+        <if test="surplus gt 10000" >
+          gid = 3
+        </if>
+        <if test="surplus gt 2000 and  surplus lte 10000" >
+          gid = 2
+        </if>
+        <if test="surplus gt 0 and surplus lte 2000" >
+          gid = 1
+        </if>
+      </set>
+    where uid = #{uid}
+  </update>
+  <update id="updateuserSurplus">
+    update  user
+    set surplus = surplus - #{param2}
+    where uid=#{param1}
+
+  </update>
+
+
+</mapper>

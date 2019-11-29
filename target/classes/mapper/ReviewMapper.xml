@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Start.lpy.Mapper.ReviewMapper" >
+  <resultMap id="BaseResultMap" type="Start.lpy.pojo.Review" >
+    <id column="rid" property="rid" jdbcType="INTEGER" />
+    <result column="review" property="review" jdbcType="CHAR" />
+    <result column="review_createtime" property="reviewCreatetime" jdbcType="TIMESTAMP" />
+    <result column="film_score" property="filmScore" jdbcType="DOUBLE" />
+  </resultMap>
+
+  <resultMap id="RelationResultMap" type="Start.lpy.pojo.UserFilmReview" >
+    <id column="ufrid" property="ufrid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="fid" property="fid" jdbcType="CHAR" />
+    <result column="rid" property="rid" jdbcType="INTEGER" />
+    <association property="user" javaType="Start.lpy.pojo.User">
+      <result column="username" property="username" jdbcType="CHAR"/>
+    </association>
+    <association property="film" javaType="Start.lpy.pojo.Film">
+      <result column="film_name" property="filmName" jdbcType="CHAR" />
+    </association>
+    <association property="review" javaType="Start.lpy.pojo.Review">
+      <result column="review" property="review" jdbcType="CHAR" />
+      <result column="review_createtime" property="reviewCreatetime" jdbcType="TIMESTAMP" />
+      <result column="film_score" property="filmScore" jdbcType="DOUBLE" />
+    </association>
+  </resultMap>
+
+
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    rid, review, review_createtime, film_score
+  </sql>
+  <select id="selectInfobyname" resultMap="RelationResultMap">
+  SELECT uid,username,fid,film_name,ufrid,rid,review,review_createtime,film_score
+  from `user` NATURAL JOIN user_film_review NATURAL JOIN film NATURAL JOIN review
+  <if test=" _parameter != null">
+      where username like '%${_parameter}%' or film_name like '%${_parameter}%'
+  </if>
+  </select>
+
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Start.lpy.pojo.ReviewExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from review
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from review
+    where rid = #{rid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from review
+    where rid = #{rid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="Start.lpy.pojo.ReviewExample" >
+    delete from review
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <delete id="deleteByReleationPrimaryKey"  parameterType="java.lang.Integer" >
+    delete from user_film_review
+    where ufrid = #{ufrid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="Start.lpy.pojo.Review" >
+    insert into review ( review, film_score)
+    values (#{review,jdbcType=CHAR},  #{filmScore,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="Start.lpy.pojo.Review" >
+    insert into review
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        rid,
+      </if>
+      <if test="review != null" >
+        review,
+      </if>
+      <if test="reviewCreatetime != null" >
+        review_createtime,
+      </if>
+      <if test="filmScore != null" >
+        film_score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=INTEGER},
+      </if>
+      <if test="review != null" >
+        #{review,jdbcType=CHAR},
+      </if>
+      <if test="reviewCreatetime != null" >
+        #{reviewCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filmScore != null" >
+        #{filmScore,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <insert id="inserttorelation" parameterType="Start.lpy.pojo.UserFilmReview">
+      insert into user_film_review (uid,fid,rid)
+      values (  #{uid},#{fid}, #{rid}  )
+  </insert>
+  <select id="countByExample" parameterType="Start.lpy.pojo.ReviewExample" resultType="java.lang.Integer" >
+    select count(*) from review
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <select id="getKeyvalue" resultType="java.lang.Integer">
+    SELECT LAST_INSERT_ID()
+
+  </select>
+    <select id="selectreviewbyfid" resultMap="RelationResultMap">
+      SELECT username ,review,review_createtime
+    FROM `user` NATURAL join user_film_review NATURAL JOIN review
+    WHERE fid = #{fid} order  by review_createtime desc limit 0,5
+    </select>
+
+    <update id="updateByExampleSelective" parameterType="map" >
+    update review
+    <set >
+      <if test="record.rid != null" >
+        rid = #{record.rid,jdbcType=INTEGER},
+      </if>
+      <if test="record.review != null" >
+        review = #{record.review,jdbcType=CHAR},
+      </if>
+      <if test="record.reviewCreatetime != null" >
+        review_createtime = #{record.reviewCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.filmScore != null" >
+        film_score = #{record.filmScore,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update review
+    set rid = #{record.rid,jdbcType=INTEGER},
+      review = #{record.review,jdbcType=CHAR},
+      review_createtime = #{record.reviewCreatetime,jdbcType=TIMESTAMP},
+      film_score = #{record.filmScore,jdbcType=DOUBLE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="Start.lpy.pojo.Review" >
+    update review
+    <set >
+      <if test="review != null" >
+        review = #{review,jdbcType=CHAR},
+      </if>
+      <if test="reviewCreatetime != null" >
+        review_createtime = #{reviewCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="filmScore != null" >
+        film_score = #{filmScore,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Start.lpy.pojo.Review" >
+    update review
+    set review = #{review,jdbcType=CHAR},
+      review_createtime = #{reviewCreatetime,jdbcType=TIMESTAMP},
+      film_score = #{filmScore,jdbcType=DOUBLE}
+    where rid = #{rid,jdbcType=INTEGER}
+  </update>
+</mapper>

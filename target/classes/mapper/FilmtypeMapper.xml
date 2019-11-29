@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="Start.lpy.Mapper.FilmtypeMapper" >
+  <resultMap id="BaseResultMap" type="Start.lpy.pojo.Filmtype" >
+    <id column="ftid" property="ftid" jdbcType="INTEGER" />
+    <result column="film_typename" property="filmTypename" jdbcType="CHAR" />
+    <result column="film_typedescription" property="filmTypedescription" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ftid, film_typename, film_typedescription
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="Start.lpy.pojo.FilmtypeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from filmtype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from filmtype
+    where ftid = #{ftid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from filmtype
+    where ftid = #{ftid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="Start.lpy.pojo.FilmtypeExample" >
+    delete from filmtype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="Start.lpy.pojo.Filmtype" >
+    insert into filmtype (ftid, film_typename, film_typedescription
+      )
+    values (#{ftid,jdbcType=INTEGER}, #{filmTypename,jdbcType=CHAR}, #{filmTypedescription,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="Start.lpy.pojo.Filmtype" >
+    insert into filmtype
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ftid != null" >
+        ftid,
+      </if>
+      <if test="filmTypename != null" >
+        film_typename,
+      </if>
+      <if test="filmTypedescription != null" >
+        film_typedescription,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ftid != null" >
+        #{ftid,jdbcType=INTEGER},
+      </if>
+      <if test="filmTypename != null" >
+        #{filmTypename,jdbcType=CHAR},
+      </if>
+      <if test="filmTypedescription != null" >
+        #{filmTypedescription,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="Start.lpy.pojo.FilmtypeExample" resultType="java.lang.Integer" >
+    select count(*) from filmtype
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+    <select id="selectallname" resultMap="BaseResultMap">
+        select  * from filmtype
+    </select>
+  <select id="countfilmsintypes" resultType="java.lang.Integer" parameterType="Start.lpy.pojo.Filmtype">
+    /*SELECT IfNULL((SELECT COUNT(fid) FROM film_filmtype GROUP BY ftid HAVING ftid = #{ftid,jdbcType=INTEGER}),0)*/
+
+     /* SELECT COUNT(fid) FROM film_filmtype  GROUP BY ftid  having ftid = #{ftid}*/
+      SELECT IFNULL(COUNT(fid),0)  FROM film_filmtype  WHERE ftid = #{ftid}
+  </select>
+  <select id="selectByname" resultMap="BaseResultMap">
+    select * from filmtype where film_typename = #{filmTypename,jdbcType=CHAR}
+  </select>
+  <select id="getfilms" resultType="java.lang.Integer">
+      select count(fid) from film_filmtype where  ftid=#{ftid}
+
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update filmtype
+    <set >
+      <if test="record.ftid != null" >
+        ftid = #{record.ftid,jdbcType=INTEGER},
+      </if>
+      <if test="record.filmTypename != null" >
+        film_typename = #{record.filmTypename,jdbcType=CHAR},
+      </if>
+      <if test="record.filmTypedescription != null" >
+        film_typedescription = #{record.filmTypedescription,jdbcType=CHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update filmtype
+    set ftid = #{record.ftid,jdbcType=INTEGER},
+      film_typename = #{record.filmTypename,jdbcType=CHAR},
+      film_typedescription = #{record.filmTypedescription,jdbcType=CHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="Start.lpy.pojo.Filmtype" >
+    update filmtype
+    <set >
+      <if test="filmTypename != null" >
+        film_typename = #{filmTypename,jdbcType=CHAR},
+      </if>
+      <if test="filmTypedescription != null" >
+        film_typedescription = #{filmTypedescription,jdbcType=CHAR},
+      </if>
+    </set>
+    where ftid = #{ftid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Start.lpy.pojo.Filmtype" >
+    update filmtype
+    set film_typename = #{filmTypename,jdbcType=CHAR},
+      film_typedescription = #{filmTypedescription,jdbcType=CHAR}
+    where ftid = #{ftid,jdbcType=INTEGER}
+  </update>
+</mapper>

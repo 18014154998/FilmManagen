@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Start.lpy.Mapper.RoleMapper">
+
+
+  <resultMap id="BaseResultMap" type="Start.lpy.pojo.Role">
+    <id column="roleid" jdbcType="INTEGER" property="roleid" />
+    <result column="role_name" jdbcType="CHAR" property="roleName" />
+    <result column="role_state" jdbcType="INTEGER" property="roleState" />
+    <result column="role_createtime" jdbcType="TIMESTAMP" property="roleCreatetime" />
+    <result column="rele_destorytime" jdbcType="TIMESTAMP" property="releDestorytime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    roleid, role_name, role_state, role_createtime, rele_destorytime
+  </sql>
+  <select id="selectByExample" parameterType="Start.lpy.pojo.RoleExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from role
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from role
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="Start.lpy.pojo.RoleExample">
+    delete from role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="Start.lpy.pojo.Role">
+    insert into role (roleid, role_name, role_state, 
+      role_createtime, rele_destorytime)
+    values (#{roleid,jdbcType=INTEGER}, #{roleName,jdbcType=CHAR}, #{roleState,jdbcType=INTEGER}, 
+      #{roleCreatetime,jdbcType=TIMESTAMP}, #{releDestorytime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="Start.lpy.pojo.Role">
+    insert into role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        roleid,
+      </if>
+      <if test="roleName != null">
+        role_name,
+      </if>
+      <if test="roleState != null">
+        role_state,
+      </if>
+      <if test="roleCreatetime != null">
+        role_createtime,
+      </if>
+      <if test="releDestorytime != null">
+        rele_destorytime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleid != null">
+        #{roleid,jdbcType=INTEGER},
+      </if>
+      <if test="roleName != null">
+        #{roleName,jdbcType=CHAR},
+      </if>
+      <if test="roleState != null">
+        #{roleState,jdbcType=INTEGER},
+      </if>
+      <if test="roleCreatetime != null">
+        #{roleCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releDestorytime != null">
+        #{releDestorytime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="Start.lpy.pojo.RoleExample" resultType="java.lang.Integer">
+    select count(*) from role
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update role
+    <set>
+      <if test="record.roleid != null">
+        roleid = #{record.roleid,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleName != null">
+        role_name = #{record.roleName,jdbcType=CHAR},
+      </if>
+      <if test="record.roleState != null">
+        role_state = #{record.roleState,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleCreatetime != null">
+        role_createtime = #{record.roleCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.releDestorytime != null">
+        rele_destorytime = #{record.releDestorytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update role
+    set roleid = #{record.roleid,jdbcType=INTEGER},
+      role_name = #{record.roleName,jdbcType=CHAR},
+      role_state = #{record.roleState,jdbcType=INTEGER},
+      role_createtime = #{record.roleCreatetime,jdbcType=TIMESTAMP},
+      rele_destorytime = #{record.releDestorytime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="Start.lpy.pojo.Role">
+    update role
+    <set>
+      <if test="roleName != null">
+        role_name = #{roleName,jdbcType=CHAR},
+      </if>
+      <if test="roleState != null">
+        role_state = #{roleState,jdbcType=INTEGER},
+      </if>
+      <if test="roleCreatetime != null">
+        role_createtime = #{roleCreatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="releDestorytime != null">
+        rele_destorytime = #{releDestorytime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="Start.lpy.pojo.Role">
+    update role
+    set role_name = #{roleName,jdbcType=CHAR},
+      role_state = #{roleState,jdbcType=INTEGER},
+      role_createtime = #{roleCreatetime,jdbcType=TIMESTAMP},
+      rele_destorytime = #{releDestorytime,jdbcType=TIMESTAMP}
+    where roleid = #{roleid,jdbcType=INTEGER}
+  </update>
+
+
+</mapper>

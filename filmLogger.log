@@ -1,0 +1,54 @@
+2019-10-14 19:46:47.935  INFO 13608 --- [main] Start.FilmApplication                    : Starting FilmApplication on DESKTOP-V5IAGRU with PID 13608 (started by 刘平远 in D:\Intellig Idea Workspace\springbootFilm)
+2019-10-14 19:46:47.938  INFO 13608 --- [main] Start.FilmApplication                    : No active profile set, falling back to default profiles: default
+2019-10-14 19:46:48.569  INFO 13608 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-10-14 19:46:48.595  INFO 13608 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 19ms. Found 0 repository interfaces.
+2019-10-14 19:46:48.961  INFO 13608 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$9092473a] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-14 19:46:49.265  INFO 13608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-10-14 19:46:49.286  INFO 13608 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-10-14 19:46:49.286  INFO 13608 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.26]
+2019-10-14 19:46:49.420  INFO 13608 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/film]   : Initializing Spring embedded WebApplicationContext
+2019-10-14 19:46:49.421  INFO 13608 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1429 ms
+2019-10-14 19:46:49.569  INFO 13608 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-10-14 19:46:49.619  INFO 13608 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.12.Final}
+2019-10-14 19:46:49.620  INFO 13608 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-10-14 19:46:49.782  INFO 13608 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-10-14 19:46:49.890  INFO 13608 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-10-14 19:46:49.891  WARN 13608 --- [main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-10-14 19:46:49.981  INFO 13608 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-10-14 19:46:49.989  INFO 13608 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2019-10-14 19:46:50.364  INFO 13608 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-10-14 19:46:50.839  INFO 13608 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-10-14 19:46:50.864  WARN 13608 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-10-14 19:46:50.892  INFO 13608 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2019-10-14 19:46:50.924  WARN 13608 --- [main] org.thymeleaf.templatemode.TemplateMode  : [THYMELEAF][main] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.
+2019-10-14 19:46:51.049  INFO 13608 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/film'
+2019-10-14 19:46:51.052  INFO 13608 --- [main] Start.FilmApplication                    : Started FilmApplication in 3.519 seconds (JVM running for 4.42)
+2019-10-14 19:49:08.735  INFO 8648 --- [main] Start.FilmApplication                    : Starting FilmApplication on DESKTOP-V5IAGRU with PID 8648 (started by 刘平远 in D:\Intellig Idea Workspace\springbootFilm)
+2019-10-14 19:49:08.738  INFO 8648 --- [main] Start.FilmApplication                    : No active profile set, falling back to default profiles: default
+2019-10-14 19:49:09.403  INFO 8648 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data repositories in DEFAULT mode.
+2019-10-14 19:49:09.433  INFO 8648 --- [main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21ms. Found 0 repository interfaces.
+2019-10-14 19:49:09.717  INFO 8648 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$224c0262] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2019-10-14 19:49:09.962  INFO 8648 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2019-10-14 19:49:09.980  INFO 8648 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2019-10-14 19:49:09.981  INFO 8648 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.26]
+2019-10-14 19:49:10.135  INFO 8648 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/film]   : Initializing Spring embedded WebApplicationContext
+2019-10-14 19:49:10.135  INFO 8648 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1346 ms
+2019-10-14 19:49:10.343  INFO 8648 --- [main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [
+	name: default
+	...]
+2019-10-14 19:49:10.438  INFO 8648 --- [main] org.hibernate.Version                    : HHH000412: Hibernate Core {5.3.12.Final}
+2019-10-14 19:49:10.440  INFO 8648 --- [main] org.hibernate.cfg.Environment            : HHH000206: hibernate.properties not found
+2019-10-14 19:49:10.679  INFO 8648 --- [main] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.0.4.Final}
+2019-10-14 19:49:10.842  INFO 8648 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2019-10-14 19:49:10.844  WARN 8648 --- [main] com.zaxxer.hikari.util.DriverDataSource  : Registered driver with driverClassName=com.mysql.jdbc.Driver was not found, trying direct instantiation.
+2019-10-14 19:49:10.945  INFO 8648 --- [main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2019-10-14 19:49:10.953  INFO 8648 --- [main] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2019-10-14 19:49:11.333  INFO 8648 --- [main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2019-10-14 19:49:11.837  INFO 8648 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2019-10-14 19:49:11.867  WARN 8648 --- [main] aWebConfiguration$JpaWebMvcConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2019-10-14 19:49:11.896  INFO 8648 --- [main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2019-10-14 19:49:11.932  WARN 8648 --- [main] org.thymeleaf.templatemode.TemplateMode  : [THYMELEAF][main] Template Mode 'HTML5' is deprecated. Using Template Mode 'HTML' instead.
+2019-10-14 19:49:12.069  INFO 8648 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8080 (http) with context path '/film'
+2019-10-14 19:49:12.071  INFO 8648 --- [main] Start.FilmApplication                    : Started FilmApplication in 3.809 seconds (JVM running for 4.738)
